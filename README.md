@@ -4,8 +4,7 @@
 ## 목표
 - 매일 꾸준히 문제 풀기
 - 백준 골드 달성
-
-[![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge? boj=okip0428)]((https://solved.ac/profile/gkfdkdlel))
+[![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge? boj=gkfdkdlel)](https://solved.ac/gkfdkdlel/)
 
 ## commit 규칙
 - **형식**: `Keyword` : 출처 난이도 제목
