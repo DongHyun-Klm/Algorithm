@@ -1,55 +1,55 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt(), number;
-		boolean[] swit = new boolean[N];
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		int T = Integer.parseInt(br.readLine());
+		int[] switchArr = new int[T];
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < T; i++) {
+			switchArr[i] = Integer.parseInt(st.nextToken());
+		}
+
+		int N = Integer.parseInt(br.readLine());
 		for (int i = 0; i < N; i++) {
-			if (sc.nextInt() == 1)
-				swit[i] = true;
-			else
-				swit[i] = false;
-		}
-	
-		int M = sc.nextInt();
-		for (int i = 0; i < M; i++) {
-			switch (sc.nextInt()) {
-			case 1:
-				number = sc.nextInt();
-				for (int j = 1; j * number - 1 < swit.length; j++) {
-					swit[j * number - 1] = !swit[j * number - 1];
+			st = new StringTokenizer(br.readLine());
+			int s = Integer.parseInt(st.nextToken());
+			int num = Integer.parseInt(st.nextToken());
+
+			if (s == 1) {
+				int idx = num - 1;
+				while (idx < T) {
+					switchArr[idx] = (switchArr[idx] + 1) % 2;
+					idx = idx + num;
 				}
-				break;
-			case 2:
-				number = sc.nextInt() - 1;
-				swit[number] = !swit[number];
-				if (number == swit.length - 1 || number == 0)
-					break;
-				int hand = 1;
-				while (true) {
-					if (swit[number - hand] == swit[number + hand]) {
-						swit[number - hand] = !swit[number - hand];
-						swit[number + hand] = !swit[number + hand];
-					} else
-						break;
-					if (number + hand == swit.length - 1 || number - hand == 0)
-						break;
-					hand++;
+			} else {
+				int k = 1;
+				outer: while (num - 1 + k < T && num - 1 - k >= 0) {
+					if (switchArr[num - 1 + k] == switchArr[num - 1 - k]) {
+						k++;
+					} else {
+						break outer;
+					}
 				}
-				break;
+				for (int j = -k + 1; j < k; j++) {
+					switchArr[num - 1 + j] = (switchArr[num - 1 + j] + 1) % 2;
+				}
 			}
+			
 
 		}
 
-		for (int j = 0; j < swit.length; j++) {
-		    if (swit[j] == true)
-		        System.out.print("1 ");
-		    else
-		        System.out.print("0 ");
-		    if ((j + 1) % 20 == 0)
-		        System.out.println();
+		for (int t = 0; t < T; t++) {
+			System.out.print(switchArr[t] + " ");
+			if (t == T - 1 || t % 20 == 19) {
+				System.out.println();
+			}
 		}
-
 	}
+
 }
