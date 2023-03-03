@@ -1,35 +1,32 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		ArrayList<Integer> index = new ArrayList<>();
-		int[] count = new int[10001];
-		for (int i = 0; i < n; i++) {
-			count[sc.nextInt()]++;
+		int num = sc.nextInt();
+		int[] arr = new int[num];
+
+		for (int n = 0; n < num; n++) {
+			arr[n] = sc.nextInt();
 		}
-		for (int i = 1; i < count.length; i++) {
-			if(count[i]!=0) index.add(i);
-		}
-		int[] sum = new int[index.size()];
-		for (int i = 0; i < index.size(); i++) {
-			// i보다 작은애
-			for (int j = 0; j < i; j++) {
-				sum[i] += (index.get(i) - index.get(j)) * count[index.get(j)];
+		Arrays.sort(arr);
+
+		int difSum = 0;
+		int min = Integer.MAX_VALUE;
+		int minIdx = 0;
+		for (int t = 0; t < arr.length; t++) { // 모든 수를 기준으로
+			difSum = 0;
+			for (int i = 0; i < arr.length; i++) { // 차이를 비교해서 더해줘요
+				difSum += Math.abs(arr[i] - arr[t]);
 			}
-			// i보다 큰애
-			for (int j = i+1; j < index.size(); j++) {
-				sum[i] += (index.get(j) - index.get(i)) * count[index.get(j)];
-			}
-		}
-		for (int i = 0; i < sum.length; i++) {
-			if(sum[i] == Arrays.stream(sum).min().getAsInt()) {
-				System.out.println(index.get(i));
-				break;
+//			System.out.println(difSum);
+			if (min > difSum) { 
+				min = difSum;
+				minIdx = t;
 			}
 		}
+		System.out.println(arr[minIdx]);
+		sc.close();
 	}
 }
