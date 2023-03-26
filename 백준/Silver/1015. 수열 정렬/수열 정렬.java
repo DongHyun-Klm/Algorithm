@@ -5,25 +5,27 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
-		int[] nums = new int[N];
-		
+		elem[] arr = new elem[N];
 		int[] P = new int[N];
-		for (int i = 0; i < nums.length; i++) {
-			nums[i] = sc.nextInt();
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = new elem();
+			arr[i].num = sc.nextInt();
+			arr[i].idx = i;
 		}
-		int[] A = nums.clone();
-		Arrays.sort(nums);
-		for (int i = 0; i < N; i++) {
-			int num = nums[i];
-			for (int j = 0; j < N; j++) {
-				if(A[j]==num) {
-					P[j] = i;
-					A[j] = 0;
-					break;
-				}
-				
-			}
+		Arrays.sort(arr);
+		for (int i = 0; i < P.length; i++) {
+			P[arr[i].idx] = i;
 		}
 		System.out.println(Arrays.toString(P).replaceAll("[\\[\\],]", ""));
+	}
+	static class elem implements Comparable<elem>{
+		int num;
+		int idx;
+		@Override
+		public int compareTo(elem o) {
+			if(num!=o.num) return num-o.num;
+			else return idx - o.idx;
+		}
+		
 	}
 }
