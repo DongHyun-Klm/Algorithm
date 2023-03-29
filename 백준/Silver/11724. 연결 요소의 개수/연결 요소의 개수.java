@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
@@ -23,17 +25,24 @@ public class Main {
 		}
 		for (int i = 1; i < arr.length; i++) {
 			if (!visited[i]) {
-				DFS(i);
+				BFS(i);
 				cnt++;
 			}
 		}
 		System.out.println(cnt);
 	}
 
-	private static void DFS(int v) {
+	private static void BFS(int v) {
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(v);
 		visited[v] = true;
-		for (int j = 0; j < arr[v].size(); j++) {
-			if(!visited[arr[v].get(j)]) DFS(arr[v].get(j));
+		while (!queue.isEmpty()) {
+			int x = queue.poll();
+			for (int i = 0; i < arr[x].size(); i++) {
+				if(visited[arr[x].get(i)]) continue;
+				queue.add(arr[x].get(i));
+				visited[arr[x].get(i)] = true;
+			}
 		}
 	}
 }
