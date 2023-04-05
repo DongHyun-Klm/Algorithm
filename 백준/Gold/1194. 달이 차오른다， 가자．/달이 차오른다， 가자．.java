@@ -74,7 +74,6 @@ public class Main {
 					if((now.key & (1<<number-97)) == 0) {
 						key = now.key + (1<<number-97);
 					}
-					visited[nr][nc][now.key] = true;
 					visited[nr][nc][key] = true;
 					queue.add(new node(nr, nc, now.dist+1, key));
 				}
