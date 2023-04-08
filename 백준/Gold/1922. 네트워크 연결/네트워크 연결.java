@@ -1,47 +1,49 @@
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Main {
-	static int[] p;
+	static class node implements Comparable<node>{
+		int v, dist;
+		node(int v, int dist) {
+			this.v = v;
+			this.dist = dist;
+		}
+		@Override
+		public int compareTo(node o) {
+			return dist - o.dist;
+		}
+	}
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt(), M = sc.nextInt();
-		p = new int[N+1];
-		for(int i=1;i<=N;i++) p[i] = i;
-		int[][] arr = new int[M][3];
+		ArrayList<node>[] arr = new ArrayList[N+1];
+		for(int i=1;i<=N;i++) arr[i] = new ArrayList<>();
 		for (int i = 0; i < M; i++) {
-			arr[i][0] = sc.nextInt();
-			arr[i][1] = sc.nextInt();
-			arr[i][2] = sc.nextInt();
+			int x = sc.nextInt();
+			int y = sc.nextInt();
+			int w = sc.nextInt();
+			arr[x].add(new node(y, w));
+			arr[y].add(new node(x, w));
 		}
-		Arrays.sort(arr, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[2] - o2[2];
+		boolean[] visited = new boolean[N+1];
+		PriorityQueue<node> queue = new PriorityQueue<>();
+		int pick = 0, ans = 0;
+		visited[1] = true;
+		for(node x : arr[1]) {
+			queue.add(x);
+		}
+		while(pick!=N-1) {
+			node now = queue.poll();
+			if(visited[now.v]) continue;
+			ans += now.dist;
+			pick++;
+			visited[now.v] = true;
+			for(node x : arr[now.v]) {
+				queue.add(x);
 			}
-		});
-		int pick = 0;
-		int ans = 0;
-		for (int i = 0; i < M; i++) {
-			int x = findSet(arr[i][0]);
-			int y = findSet(arr[i][1]);
-			if(x != y) {
-				pick++;
-				ans += arr[i][2];
-				union(x, y);
-			}
-			if(pick == N-1) break;
 		}
 		System.out.println(ans);
-	}
-
-	private static void union(int x, int y) {
-		p[x] = y;
-	}
-
-	private static int findSet(int i) {
-		if(i != p[i]) p[i] = findSet(p[i]);
-		return p[i];
 	}
 }
