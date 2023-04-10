@@ -3,15 +3,15 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int X = sc.nextInt(), cnt = 0;
-		int[] N = new int[X+1];
-		N[0] = 0;
-		N[1] = 0;
-		for (int i = 2; i < N.length; i++) {
-			N[i] = N[i-1]+1;
-			if(i%2==0) N[i] = Math.min(N[i], N[i/2]+1);
-			if(i%3==0) N[i] = Math.min(N[i], N[i/3]+1);
+		int N = sc.nextInt();
+		int[] dp = new int[N+1];
+		// 초기값(안해도 됨)
+		dp[N] = 0;
+		for (int i = N-1; i > 0; i--) {
+			dp[i] = dp[i+1] + 1;
+			if(i <= N/2) dp[i] = Math.min(dp[i * 2] + 1, dp[i]);
+			if(i <= N/3) dp[i] = Math.min(dp[i * 3] + 1, dp[i]);
 		}
-		System.out.println(N[X]);
+		System.out.println(dp[1]);
 	}
 }
