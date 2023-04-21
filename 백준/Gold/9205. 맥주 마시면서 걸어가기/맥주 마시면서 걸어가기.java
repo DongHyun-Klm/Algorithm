@@ -11,6 +11,7 @@ public class Main {
 		}
 	}
 	public static void main(String[] args) {
+		StringBuilder sb = new StringBuilder();
 		Scanner sc = new Scanner(System.in);
 		int t = sc.nextInt();
 		o:
@@ -29,7 +30,7 @@ public class Main {
 			while (!q.isEmpty()) {
 				info now = q.poll();
 				if(Math.abs(now.r - fev_r) + Math.abs(now.c - fev_c) <= 1000) {
-					System.out.println("happy");
+					sb.append("happy").append('\n');
 					continue o;
 				}
 				for (int i = 0; i < n; i++) {
@@ -40,7 +41,8 @@ public class Main {
 					}
 				}
 			}
-			System.out.println("sad");
+			sb.append("sad").append('\n');
 		}
+		System.out.println(sb.toString());
 	}
 }
