@@ -1,19 +1,25 @@
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt(), K = sc.nextInt();
-		LinkedList<Integer> Dur = new LinkedList<>();
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken()), K = Integer.parseInt(st.nextToken());
+		ArrayList<Integer> Dur = new ArrayList<>();
 		boolean[] belt = new boolean[N];
-		for(int i=0;i<2*N;i++) Dur.add(sc.nextInt());
+		st = new StringTokenizer(br.readLine());
+		for(int i=0;i<2*N;i++) Dur.add(Integer.parseInt(st.nextToken()));
 		int ans = 0;
+		int cnt = 0;
 		while (true) {
 			ans++;
 			// 1
-			Dur.addFirst(Dur.getLast());
-			Dur.removeLast();
+			Dur.add(0, Dur.get(Dur.size()-1));
+			Dur.remove(Dur.size()-1);
 			for(int i=N-2;i>=0;i--) {
 				if(belt[i]) {
 					belt[i+1] = true;
@@ -28,6 +34,7 @@ public class Main {
 					if(Dur.get(i+1)==0)continue;
 					belt[i+1] = true;
 					Dur.set(i+1,Dur.get(i+1)-1);
+					if(Dur.get(i+1)==0) cnt++;
 					belt[i] = false;
 				}
 			}
@@ -35,12 +42,9 @@ public class Main {
 			if(Dur.get(0)!=0) {
 				belt[0] = true;
 				Dur.set(0,Dur.get(0)-1);
+				if(Dur.get(0)==0) cnt++;
 			}
 			// 4
-			int cnt = 0;
-			for(int t : Dur) {
-				if(t==0) cnt++;
-			}
 			if(cnt>=K) break;
 		}
 		System.out.println(ans);
