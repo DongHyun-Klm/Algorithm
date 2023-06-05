@@ -66,6 +66,7 @@ public class Main {
 			if(visited[now.v]) continue;
 			visited[now.v] = true;
 			for(info t : arr_reverse[now.v]) {
+                if(visited[t.v]) continue;
 				if(dist2[t.v] > t.weight + dist2[now.v]) {
 					dist2[t.v] = t.weight + dist2[now.v];
 					q.add(new info(t.v, dist2[t.v]));
