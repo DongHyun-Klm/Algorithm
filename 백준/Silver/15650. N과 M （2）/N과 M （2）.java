@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
 	static int N, M;
 	static int[] series;
-	static boolean[] check;
 	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) {
@@ -11,7 +10,7 @@ public class Main {
 		N = sc.nextInt();
 		M = sc.nextInt();
 		series = new int[M + 1];
-		check = new boolean[N+1];
+		// NM 함수는  1번째 원소부터 M번째 원소를 조건에 맞는 모든 방법 출력
 		NM(1);
 		System.out.println(sb.toString());
 	}
@@ -25,14 +24,12 @@ public class Main {
 			sb.append('\n');
 		}
 		// 경우의 수 체크해주고 > 다음 깊이로
+		// start를 통해 순서, 중복 제거
 		else {
 			int start = series[d-1];
-			if(start==0) start=1;
-			for (int i = start; i <= N; i++) {
-				if(check[i]) continue;
-				series[d] = i; check[i] = true;
+			for (int i = start+1; i <= N; i++) {
+				series[d] = i;
 				NM(d + 1);
-				check[i] = false;
 				series[d] = 0;
 			}
 		}
