@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
 	static int N, M;
 	static int[] series;
-	static int max;
 	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) {
@@ -11,7 +10,8 @@ public class Main {
 		N = sc.nextInt();
 		M = sc.nextInt();
 		series = new int[M + 1];
-		max = 0;
+		series[0] = 1;
+		// NM 함수는  1번째 원소부터 M번째 원소를 조건에 맞는 모든 방법 출력
 		NM(1);
 		System.out.println(sb.toString());
 	}
@@ -25,14 +25,13 @@ public class Main {
 			sb.append('\n');
 		}
 		// 경우의 수 체크해주고 > 다음 깊이로
+		// start를 통해 순서 제거
 		else {
-			for (int i = 1; i <= N; i++) {
-				if (max > i)
-					continue;
+			int start = series[d-1];
+			for (int i = start; i <= N; i++) {
 				series[d] = i;
-				max = Math.max(max, i);
 				NM(d + 1);
-				max = 0;
+				series[d] = 0;
 			}
 		}
 		return;
