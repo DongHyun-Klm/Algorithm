@@ -1,37 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		StringBuilder sb = new StringBuilder();
-		int N = sc.nextInt(); int M = sc.nextInt();
-		ArrayList<Integer>[] arr = new ArrayList[N+1];
-		for (int i = 1; i < arr.length; i++) {
-			arr[i] = new ArrayList<>();
-		}
-		int[] degree = new int[N+1];
-		for (int i = 0; i < M; i++) {
-			int x = sc.nextInt();
-			int y = sc.nextInt();
-			arr[x].add(y);
-			degree[y]++;
-		}
-		Queue<Integer> queue = new LinkedList<>();
-		// 0인애들 큐에 넣기
-		for (int i = 1; i < degree.length; i++) {
-			if(degree[i] == 0) queue.add(i);
-		}
-		while (!queue.isEmpty()) {
-			int index = queue.poll();
-			sb.append(index).append(' ');
-			for (int i = 0; i < arr[index].size(); i++) {
-				degree[arr[index].get(i)]--;
-				if(degree[arr[index].get(i)] == 0) queue.add(arr[index].get(i));
-			}
-		}
-		System.out.println(sb.toString());
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(st.nextToken()), M = Integer.parseInt(st.nextToken());
+        ArrayList<Integer>[] arr = new ArrayList[N+1];
+        for(int i=1;i<=N;i++) arr[i] = new ArrayList<>();
+        int[] count = new int[N + 1];
+        for(int i=0;i<M;i++) {
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken()), y = Integer.parseInt(st.nextToken());
+            arr[x].add(y);
+            count[y]++;
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=1;i<=N;i++) if(count[i] == 0) {
+            q.add(i);
+            sb.append(i).append(" ");
+        }
+        while(!q.isEmpty()){
+            int now = q.poll();
+            for(int i : arr[now]){
+                count[i]--;
+                if(count[i] == 0) {
+                    q.add(i);
+                    sb.append(i).append(" ");
+                }
+            }
+        }
+        System.out.println(sb);
+    }
 }
