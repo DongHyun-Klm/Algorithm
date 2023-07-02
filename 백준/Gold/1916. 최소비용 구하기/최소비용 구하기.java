@@ -1,59 +1,61 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-	static class node implements Comparable<node>{
-		int v, dist;
-		node(int v, int dist){
-			this.v = v;
-			this.dist = dist;
-		}
-		@Override
-		public int compareTo(node o) {
-			return dist - o.dist;
-		}
-	}
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		int N = Integer.parseInt(br.readLine());
-		int M = Integer.parseInt(br.readLine());
-		ArrayList<node>[] arr = new ArrayList[N+1];
-		for (int i = 1; i < arr.length; i++) arr[i] = new ArrayList<>();
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-			int x = Integer.parseInt(st.nextToken());
-			int y = Integer.parseInt(st.nextToken());
-			int w = Integer.parseInt(st.nextToken());
-			arr[x].add(new node(y, w));
-		}
-		st = new StringTokenizer(br.readLine());
-		int start = Integer.parseInt(st.nextToken());
-		int target = Integer.parseInt(st.nextToken());
-		int[] dist = new int[N+1];
-		boolean[] visited = new boolean[N+1];
-		Arrays.fill(dist, Integer.MAX_VALUE);
-		dist[start] = 0;
-		PriorityQueue<node> queue = new PriorityQueue<>();
-		queue.add(new node(start, 0));
-		while (!queue.isEmpty()) {
-			node now = queue.poll();
-			if(visited[now.v]) continue;
-			visited[now.v] = true;
-			for(node n : arr[now.v]) {
-				if(now.dist + n.dist < dist[n.v]) {
-					dist[n.v] = now.dist + n.dist;
-					queue.add(new node(n.v, dist[n.v]));
-				}
-			}
-		}
-		System.out.println(dist[target]);
-	}
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        int N = Integer.parseInt(br.readLine()); //도시 수(노드 수)
+        int M = Integer.parseInt(br.readLine()); //버스 수(간선 수)
+        int[][] adj = new int[N + 1][N + 1];
+        for(int i=1; i<=N; i++){
+            Arrays.fill(adj[i], -1);
+        }
+        for (int m = 0; m < M; m++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            if(adj[a][b]==-1 || c < adj[a][b])adj[a][b] = c;
+        }
+
+        final int INF = 1000000001;
+
+
+        st = new StringTokenizer(br.readLine());
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
+
+        int[] dist = new int[N + 1];
+        boolean[] visited = new boolean[N + 1];
+        Arrays.fill(dist, INF);
+        dist[start] = 0;
+
+        for (int n = 1; n < N; n++) {
+            int current = -1;
+            int min = INF;
+
+            for (int i = 1; i <= N; i++) {
+                if (!visited[i] && min > dist[i]) {
+                    min = dist[i];
+                    current = i;
+                }
+            }
+//            System.out.println(current);
+            visited[current] = true;
+
+            for (int i = 1; i <= N; i++) {
+                if (!visited[i] && adj[current][i] != -1 && dist[i] > dist[current] + adj[current][i]) {
+                    dist[i] = dist[current] + adj[current][i];
+                }
+            }
+            if(current == end ) break;
+        }
+        System.out.println(dist[end]);
+    }
+
 }
