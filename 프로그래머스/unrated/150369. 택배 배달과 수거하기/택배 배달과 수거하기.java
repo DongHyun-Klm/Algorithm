@@ -2,47 +2,47 @@ class Solution {
     public long solution(int cap, int n, int[] deliveries, int[] pickups) {
         // 수거, 배달 포함해서 가장 먼 곳 거리 찾기
         long answer = 0;
-        int maxDistance = -1, last1 = deliveries.length, last2 = pickups.length;
-        while(maxDistance!=0){
-            maxDistance = 0;
-            for(int i=last1-1; i>=0; i--){
+        // 시간초과때문에 만든 last1, last2
+        int last1 = deliveries.length - 1, last2 = pickups.length - 1;
+        while(last1 !=-1 || last2 != -1){
+            for(int i=last1; i>=0; i--){
                 if(deliveries[i]!=0) {
-                    last1 = i+1;
+                    last1 = i;
                     break;
                 }
-                if(i==0) last1 = 0;
+                if(i==0) last1 = -1;
             }
-            for(int i=last2-1; i>=0; i--){
+            for(int i=last2; i>=0; i--){
                 if(pickups[i]!=0) {
-                    last2 = i+1;
+                    last2 = i;
                     break;
                 }
-                if(i==0) last2 = 0;
+                if(i==0) last2 = -1;
             }
-            maxDistance = Math.max(last1, last2);
+            int maxDis = Math.max(last1, last2) + 1;
             // 거꾸로 오면서 배달하고, 수거하기
-            int temp1 = cap, temp2 = cap, idx1 = last1-1, idx2 = last2-1;
+            int temp1 = cap, temp2 = cap;
             // 배달
-            while(temp1!=0 && idx1!=-1){
-                if(deliveries[idx1]!=0){
-                    while(temp1>0 && deliveries[idx1]>0) {
+            while(temp1!=0 && last1!=-1){
+                if(deliveries[last1]!=0){
+                    while(temp1>0 && deliveries[last1]>0) {
                         temp1--;
-                        deliveries[idx1]--;
+                        deliveries[last1]--;
                     }
                 }
-                idx1--;
+                if(temp1!=0) last1--;
             }
             // 수거
-            while(temp2!=0 && idx2!=-1){
-                if(pickups[idx2]!=0){
-                    while(temp2>0 && pickups[idx2]>0) {
+            while(temp2!=0 && last2!=-1){
+                if(pickups[last2]!=0){
+                    while(temp2>0 && pickups[last2]>0) {
                         temp2--;
-                        pickups[idx2]--;
+                        pickups[last2]--;
                     }
                 }
-                idx2--;
+                if(temp2!=0) last2--;
             }
-            answer += 2 * maxDistance;
+            answer += 2 * maxDis;
         }
         return answer;
     }
