@@ -31,9 +31,9 @@ class Solution {
         int[] dist1 = new int[n+1];
         int[] dist2 = new int[n+1];
         int[] dist3 = new int[n+1];
-        Arrays.fill(dist1, 2000000001);
-        Arrays.fill(dist2, 2000000001);
-        Arrays.fill(dist3, 2000000001);
+        Arrays.fill(dist1, 2000000000);
+        Arrays.fill(dist2, 2000000000);
+        Arrays.fill(dist3, 2000000000);
         // 세 노드에서 각 노드에 대한 최단비용 구하기
         dijkstra(s, dist1);
         dijkstra(a, dist2);
@@ -56,7 +56,6 @@ class Solution {
             if(visited[now.v]) continue;
             visited[now.v] = true;
             for(info f : arr[now.v]){
-                // if(visited[f.v]) continue;
                 if(d[f.v] > f.w + d[now.v]){
                     d[f.v] = f.w + d[now.v];
                     q.add(new info(f.v, d[f.v]));
