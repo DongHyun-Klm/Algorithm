@@ -14,8 +14,8 @@ class Solution {
             q2.add(queue2[i]);
             sum2 += queue2[i];
         }
-        // 합이 홀수면 불가능
-        if((sum1 + sum2) % 2 != 0) return -1;
+        // // 합이 홀수면 불가능
+        // if((sum1 + sum2) % 2 != 0) return -1;
         
         long target = (sum1 + sum2) / 2;
         while(sum1 != target){
