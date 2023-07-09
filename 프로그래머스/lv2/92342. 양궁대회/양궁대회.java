@@ -26,6 +26,7 @@ class Solution {
             }
             score = RYAN - APEACH;
             // 최대값 비교
+            // 틀린부분(4,18 테케)
             //라이언이 가장 큰 점수 차이로 우승할 수 있는 방법이 여러 가지 일 경우, 
             //가장 낮은 점수를 더 많이 맞힌 경우를 return 해주세요.
             if(score == max_score){
@@ -43,6 +44,8 @@ class Solution {
             }
             return;
         }
+        
+        
         int ap = info[d];
         // 남은 화살수가 어피치의 i과녁 맞춘 화살수보다 크다면
         if(n>ap){
