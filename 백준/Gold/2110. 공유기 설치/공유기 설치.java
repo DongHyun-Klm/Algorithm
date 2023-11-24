@@ -15,7 +15,7 @@ public class Main {
 			house[i] = Integer.parseInt(br.readLine());
 		}
 		Arrays.sort(house);
-		int L = 0, R = 1000000000, ans = 0;
+		int L = 0, R = house[N-1], ans = 0;
 		while (L<=R) {
 			int mid = (L + R) /2;
 			if(can(mid, C)) {
