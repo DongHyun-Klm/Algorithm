@@ -1,4 +1,3 @@
-
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -26,6 +25,6 @@ public class Main {
 			arr[i] = sc.nextInt();
 		}
 		
-		System.out.println(binary(1,Arrays.stream(arr).max().getAsInt(),arr,N));
+		System.out.println(binary(1,2148483646L,arr,N));
 	}
 }
