@@ -1,49 +1,22 @@
-import java.util.*;
-
 class Solution {
     public int[] solution(int[] sequence, int k) {
-        int left = 0;
-        int right = 0;
-        int part = sequence[0];
-
-        int n = sequence.length;
-
-        List<SubSequence> subs = new ArrayList<>();
-        while (true){
-            if(part == k){
-                subs.add(new SubSequence(left, right));
+        int[] answer = new int[2];
+        int left = 0, right = sequence.length, sum = 0;
+        for(int i=0, R = 0; i<sequence.length; i++){
+            while(sum < k && R < sequence.length){
+                sum += sequence[R++];
             }
-            if(left == n && right == n) break;
-
-            if(part <= k && right < n){
-                right++;
-                if(right < n) part += sequence[right];
-            } else {
-                if(left < n) part -= sequence[left];
-                left++;
+            if(sum == k){
+                int size = R - i - 1;
+                if(right - left > size){
+                    left = i;
+                    right = R - 1;
+                }
             }
+            sum -= sequence[i];
         }
-
-        subs.sort(SubSequence::compareTo);
-
-        return new int[]{subs.get(0).left, subs.get(0).right};
-    }
-
-    private class SubSequence implements Comparable<SubSequence>{
-        int left, right, size;
-
-        public SubSequence(int left, int right) {
-            this.left = left;
-            this.right = right;
-            this.size = right - left;
-        }
-
-        @Override
-        public int compareTo(SubSequence o) {
-            if(this.size == o.size){
-                return this.left - o.left;
-            }
-            return this.size - o.size;
-        }
+        
+        answer[0] = left; answer[1] = right;
+        return answer;
     }
 }
