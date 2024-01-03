@@ -17,9 +17,11 @@ public class Main {
             altitude[i][0] = Integer.parseInt(st.nextToken());
             altitude[i][1] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(altitude, (a,b) -> b[0] - a[0]);
+        Arrays.sort(altitude, (a,b) -> a[0] - b[0]);
 
         int answer = 0;
+        // x좌표 기준 거꾸로가면서
+        // 높이가 높아지면 + 1
         PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b - a);
         for (int i = 0; i < n ; i++) {
             if(altitude[i][1] == 0){
