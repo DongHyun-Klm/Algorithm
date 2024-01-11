@@ -1,37 +1,46 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int T = Integer.parseInt(br.readLine());
-		for (int tc = 1; tc <= T; tc++) {
-			int N = Integer.parseInt(br.readLine());
-			ArrayList<Integer>[] arr = new ArrayList[N+1];
-			StringTokenizer st;
-			for(int i=1; i<=N; i++) arr[i] = new ArrayList<>();
-			for(int i=1; i<N; i++) {
-				st = new StringTokenizer(br.readLine());
-				int x = Integer.parseInt(st.nextToken()), y = Integer.parseInt(st.nextToken());
-				arr[y].add(x);
-			}
-			st = new StringTokenizer(br.readLine());
-			int n1 = Integer.parseInt(st.nextToken()), n2 = Integer.parseInt(st.nextToken());
-			Queue<Integer> q = new LinkedList<>();
-			while (!arr[n1].isEmpty()) {
-				q.add(n1);
-				n1 = arr[n1].get(0);
-			}
-			while (!arr[n2].isEmpty()) {
-				if(q.contains(n2))break;
-				n2 = arr[n2].get(0);
-			}
-			System.out.println(n2);
-		}
-	}
+    static int N;
+    static ArrayList<Integer>[] al;
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        int T = Integer.parseInt(br.readLine());
+        while (T-- > 0) {
+            input();
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken()), y = Integer.parseInt(st.nextToken());
+            // 한놈 먼저 잡고 조상들을 set에 저장
+            Set<Integer> s = new HashSet<>();
+            s.add(x);
+            while (!al[x].isEmpty()) {
+                x = al[x].get(0);
+                s.add(x);
+            }
+            // 다른 한놈 올라가면서 조상겹치나 확인
+            while (true) {
+                if(s.contains(y)) break;
+                y = al[y].get(0);
+            }
+            sb.append(y).append('\n');
+        }
+        System.out.print(sb);
+    }
+
+    private static void input() throws IOException {
+        N = Integer.parseInt(br.readLine());
+        // 조상 기억할 ArrayList (무조건 1개라 배열로 해도 될듯)
+        al = new ArrayList[N+1];
+        for (int i = 1; i <= N; i++) al[i] = new ArrayList();
+        for (int i = 1; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken()), y = Integer.parseInt(st.nextToken());
+            al[y].add(x);
+        }
+    }
 }
