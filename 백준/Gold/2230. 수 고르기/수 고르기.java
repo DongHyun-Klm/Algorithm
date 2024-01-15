@@ -12,18 +12,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         input();
         Arrays.sort(arr);
-        int ans = Integer.MAX_VALUE;
+        int R = 1, ans = Integer.MAX_VALUE;
         for (int i = 0; i < N-1; i++) {
-            int L = i + 1, R = N - 1;
-            while (L <= R) {
-                int mid = (L + R) / 2;
-                int now = arr[mid] - arr[i];
-                if(now >= M) {
-                    ans = Math.min(ans, now);
-                    R = mid - 1;
-                }
-                else L = mid + 1;
-            }
+            while (R < N - 1 && arr[R] - arr[i] < M) R++;
+            if(arr[R] - arr[i] >= M) ans = Math.min(ans, arr[R] - arr[i]);
         }
         System.out.print(ans);
     }
