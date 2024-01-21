@@ -13,7 +13,7 @@ public class Main {
         double dist1 = 0, dist2 = 0;
         int cnt = 0;
         while (!((point[0][0] == point[1][0]) && (point[0][1] == point[1][1]) && (point[0][2] == point[1][2]))) {
-            if(cnt > 50000000) break;
+            if(cnt > 10000) break;
             double[] mid = {(point[0][0] + point[1][0]) / 2 , (point[0][1] + point[1][1]) / 2, (point[0][2] + point[1][2]) / 2};
             dist1 = Math.round((Math.sqrt(Math.pow(point[0][0] - point[2][0], 2) + Math.pow(point[0][1] - point[2][1], 2) + Math.pow(point[0][2] - point[2][2], 2))) * 10000000000.0) / 10000000000.0;
             dist2 = Math.round((Math.sqrt(Math.pow(point[1][0] - point[2][0], 2) + Math.pow(point[1][1] - point[2][1], 2) + Math.pow(point[1][2] - point[2][2], 2))) * 10000000000.0) / 10000000000.0;
