@@ -24,7 +24,7 @@ public class Main {
                 }
             }
         }
-        System.out.println(dp[0][K-1]);
+        System.out.print(dp[0][K-1]);
     }
 
     private static void input() throws IOException {
