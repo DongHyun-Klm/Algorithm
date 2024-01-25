@@ -3,7 +3,7 @@
 
 ## 목표
 - 매일 꾸준히 문제 풀기
-- 백준 골드1 달성
+- 백준 플래티넘 달성
 
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=gkfdkdlel)](https://solved.ac/gkfdkdlel/)
 
