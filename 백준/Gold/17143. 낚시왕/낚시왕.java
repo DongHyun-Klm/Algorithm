@@ -47,7 +47,7 @@ public class Main {
     }
     // d 0123 : 왼아오위
     private static void moveSharks() {
-        arr = new int[R+1][C+1];
+        int[][] next_arr = new int[R+1][C+1];
         for (int i = 1; i <= M; i++) {
             shark now = sharks[i];
             if(now.eat) continue;
@@ -63,16 +63,20 @@ public class Main {
                 now.r += dir[now.d][0];
                 now.c += dir[now.d][1];
             }
-
-            // 가장 큰 상어가 나머지 잡아먹음, 배열에 위치저장
-            if(arr[now.r][now.c] != 0) {
-                if(sharks[arr[now.r][now.c]].z > now.z) {
+            // 이동후 next배열에 저장(겹치면 큰놈만)
+            if(next_arr[now.r][now.c] != 0) {
+                if(sharks[next_arr[now.r][now.c]].z > now.z) {
                     now.eat = true;
                     continue;
                 }
-                else sharks[arr[now.r][now.c]].eat = true;
+                else sharks[next_arr[now.r][now.c]].eat = true;
             }
-            arr[now.r][now.c] = i;
+            next_arr[now.r][now.c] = i;
+        }
+
+        // 다 이동했으면 원래 배열에 넣기
+        for (int i = 1; i <= R; i++) {
+            arr[i] = next_arr[i].clone();
         }
     }
 
