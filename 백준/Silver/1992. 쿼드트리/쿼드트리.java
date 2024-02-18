@@ -1,36 +1,51 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
+    static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
-    static int[][] arr;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        arr = new int[N][N];
-        for(int i=0;i<N;i++){
-            char[] temp = sc.next().toCharArray();
-            for(int j=0;j<N;j++){
-                arr[i][j] = temp[j] - '0';
-            }
-        }
-        Quad(N, 0,  0);
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int n;
+    static boolean[][] arr;
+
+    public static void main(String[] args) throws IOException {
+        input();
+        quad(0,0,n);
         System.out.print(sb);
     }
-    static void Quad(int N, int r, int c){
-        int start = arr[r][c];
-        for(int i=r;i<r+N;i++){
-            for(int j=c;j<c+N;j++){
-                if(arr[i][j]!=start) {
-                    sb.append('(');
-                    Quad(N/2, r, c);
-                    Quad(N/2, r, c+N/2);
-                    Quad(N/2, r+N/2, c);
-                    Quad(N/2, r+N/2, c+N/2);
-                    sb.append(')');
-                    return;
+
+    private static void quad(int r, int c, int n) {
+        boolean now = arr[r][c];
+        boolean flag = true;
+        o: for (int i = r; i < r+n; i++) {
+            for (int j = c; j < c+n; j++) {
+                if(arr[i][j] != now) {
+                    flag = false;
+                    break o;
                 }
             }
         }
-        sb.append(start);
+        if(flag) {
+            if(now) sb.append('1');
+            else sb.append('0');
+            return;
+        }
+        sb.append('(');
+        quad(r,c,n/2);
+        quad(r,c+n/2,n/2);
+        quad(r+n/2,c,n/2);
+        quad(r+n/2,c+n/2,n/2);
+        sb.append(')');
+    }
+
+    private static void input() throws IOException {
+        n = Integer.parseInt(br.readLine());
+        arr = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            char[] temp = br.readLine().toCharArray();
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = temp[j] == '1' ? true : false;
+            }
+        }
     }
 }
