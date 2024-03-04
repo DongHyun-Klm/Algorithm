@@ -7,7 +7,6 @@ public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static int N, M, answer = -1;
     static int[][] dir = {{1,0},{0,1},{-1,0},{0,-1}};
-    static int[][] visit;
     static char[][] arr;
 
     public static void main(String[] args) throws IOException {
@@ -20,7 +19,6 @@ public class Main {
 
     private static void DFS(int r, int c, Set<Character> s) {
         answer = Math.max(answer, s.size());
-        visit[r][c] = s.size();
 
         for (int i = 0; i < 4; i++) {
             int nr = r + dir[i][0];
@@ -38,7 +36,6 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         arr = new char[N][M];
-        visit = new int[N][M];
         for (int i = 0; i < N; i++) {
             arr[i] = br.readLine().toCharArray();
         }
