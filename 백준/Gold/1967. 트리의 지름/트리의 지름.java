@@ -5,27 +5,32 @@ public class Main {
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static int N, answer = -1;
+    static int N, x = -1, max = -1;
     static ArrayList<int[]>[] al;
     static boolean[] visit;
 
     public static void main(String[] args) throws IOException {
         input();
-        for (int i = 1; i <= N; i++) {
-            visit = new boolean[N+1];
-            visit[i] = true;
-            DFS(i, 0);
-        }
-        System.out.println(answer);
+        visit = new boolean[N+1];
+        visit[1] = true;
+        DFS(1, 0);
+        max = 0;
+        visit = new boolean[N+1];
+        visit[x] = true;
+        DFS(x, 0);
+        System.out.println(max);
     }
 
     private static void DFS(int v, int sum) {
-        for(int[] t : al[v]){
+        for(int[] t : al[v]) {
             if(visit[t[0]]) continue;
             visit[t[0]] = true;
             DFS(t[0], sum + t[1]);
         }
-        answer = Math.max(answer, sum);
+        if(sum > max) {
+            x = v;
+            max = sum;
+        }
     }
 
     private static void input() throws IOException {
