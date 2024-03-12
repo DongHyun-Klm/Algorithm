@@ -18,9 +18,9 @@ public class Main {
         int[] numbers2 = new int[half];
         for(int i=0; i<half; i++) numbers2[i] = arr[arr.length/2 + i];
 
-        ArrayList<Long> al = new ArrayList<>(), ar = new ArrayList<>();
-        rec(0, 0L, numbers1, al);
-        rec(0, 0L, numbers2, ar);
+        ArrayList<Integer> al = new ArrayList<>(), ar = new ArrayList<>();
+        rec(0, 0, numbers1, al);
+        rec(0, 0, numbers2, ar);
         // 정렬
         Collections.sort(al);
         Collections.sort(ar);
@@ -60,7 +60,7 @@ public class Main {
         System.out.println(answer);
     }
 
-    private static void rec(int i, Long sum, int[] numbers1, ArrayList<Long> a) {
+    private static void rec(int i, int sum, int[] numbers1, ArrayList<Integer> a) {
         if(i == numbers1.length) {
             a.add(sum);
             return;
