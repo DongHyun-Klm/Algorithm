@@ -54,25 +54,9 @@ public class Main {
                 q.add(new info(S, now.command + "S"));
             }
             // L R
-            char[] arr = new char[4];
-            char[] num_char = Integer.toString(now.num).toCharArray();
-            Arrays.fill(arr, '0');
-            int index = num_char.length - 1, index2 = 3;
-            while (index >= 0) {
-                arr[index2--] = num_char[index--];
-            }
-
-            StringBuilder LS = new StringBuilder(), RS = new StringBuilder();
-            for (int i = 1; i < 4; i++) {
-                LS.append(arr[i]);
-            }
-            LS.append(arr[0]);
-            int L = Integer.parseInt(LS.toString());
-            RS.append(arr[3]);
-            for (int i = 0; i < 3; i++) {
-                RS.append(arr[i]);
-            }
-            int R = Integer.parseInt(RS.toString());
+            int L = ((now.num%1000)*10) + (now.num/1000);
+            int R = (now.num/10)+ (now.num%10)*1000;
+            
             if(L == B) {
                 sb.append(now.command).append('L').append('\n');
                 return;
