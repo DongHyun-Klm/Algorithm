@@ -1,15 +1,41 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int X = sc.nextInt();
-		int cnt = 0;
-		while (true) {
-			if(X%2==1)cnt++;
-			X /= 2;
-			if (X==0) break;
-		}
-		System.out.println(cnt);
-	}
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int N, ans = 0;
+    static int[] cnt = new int[65];
+
+    public static void main(String[] args) throws IOException {
+        input();
+        cnt[64]++;
+        rec(64, 64);
+        System.out.println(ans);
+    }
+
+    private static void rec(int small, int sum) {
+        if(sum == N) {
+            for (int i = 1; i <= 64; i++) {
+                ans += cnt[i];
+            }
+            return;
+        }
+        if(sum > N) {
+            cnt[small]--;
+            small /= 2;
+            cnt[small] += 2;
+            if(sum - small >= N) {
+                sum -= small;
+                cnt[small]--;
+            }
+            rec(small, sum);
+        }
+    }
+
+    private static void input() throws IOException {
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+    }
 }
