@@ -22,8 +22,8 @@ public class Main {
                     else cnt2++;
                 }
             }
-            // O가 더 많은경우, X가 O보다 2개이상 많은경우, O가 5개 이상인 경우
-            if(cnt2 > cnt1 || cnt1 - cnt2 > 1 || cnt2 >= 5 || cnt1 >= 6){
+            // O가 더 많은경우, X가 O보다 2개이상 많은경우
+            if(cnt2 > cnt1 || cnt1 - cnt2 > 1){
                 flag = false;
             }
             else {
